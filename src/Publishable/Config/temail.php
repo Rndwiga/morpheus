@@ -10,8 +10,8 @@ return [
     */
 
     'email_host' => 'imap.gmail.com',
-    'email_user' => 'raphndwi@gmail.com',
-    'email_password' => 'qxqawfvptfruxfws',
+    'email_user' => '',
+    'email_password' => '',
 
 
     /*
