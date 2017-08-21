@@ -11,7 +11,7 @@
 					</th>
 					<th class="text-right" colspan="5">
 						<span class="text-muted m-r-sm">Showing 20 of 346 </span>
-						<a class="btn btn-default m-r-sm" data-toggle="tooltip" data-placement="top" title="Refresh"><i class="fa fa-refresh"></i></a>
+						<a class="refreshMails btn btn-default m-r-sm" data-toggle="tooltip" id="refreshMails" data-placement="top" title="Refresh"><i class="fa fa-refresh"></i></a>
 						<div class="btn-group m-r-sm mail-hidden-options">
 							<a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
 							<a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Report Spam"><i class="fa fa-exclamation-circle"></i></a>
@@ -72,9 +72,6 @@
 								{{$email->from}}
 							</td>
 							<td>
-								{{--<a href="/Emails/{{$email->uid}}" class="btn btn-block">
-                                    {{ str_limit( $email->subject, $limit = 50, $end = '.......') }}
-                                </a>--}}
 								{{ str_limit( $email->subject, $limit = 50, $end = '.......') }}
 							</td>
 							<td>
@@ -111,4 +108,63 @@
 			</table>
 		</div>
 	</div>
+@endsection
+@section('page-scripts')
+	<script>
+        $( document ).ready(function() {
+            $('.refreshMails').on('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                //1.2 fetch the emails
+                $.ajax({
+                    type: "GET",
+                    url: "mail/ajax"
+                })
+                    .done(function(data)
+                    {
+                        // 1. remove all existing rows
+                        $("tr:has(td)").remove();
+                        var keys = Object.assign([], data).reverse(); //reverse the data to have the latest first
+                        // 2. get each article
+                        $.each(keys, function (index, email) {
+
+                            // 2.2 Create checkbox
+                            var td_checkbox = $("<td class='hidden-xs' />");
+								var span_checkbox = $("<span><input type='checkbox' class='checkbox-mail'></span>");
+								td_checkbox.append(span_checkbox);
+							// 2.2 Create star
+                            var td_star = $("<td class='hidden-xs' />");
+								var span_star = $("<i class='fa fa-star icon-state-warning'></i>");
+								td_star.append(span_star);
+							// 2.2 Create paper clip
+                            var td_paper_clip = $("<td/>");
+								var span_clip = $("<i class='fa fa-paperclip'></i>");
+                            	td_paper_clip.append(span_clip);
+                            var the_date = new Date(email.date);
+                            //identify css options
+							if(email.seen === 0){
+                                var css_option = 'unread'
+							}else {
+                                var css_option = 'read'
+							}
+
+
+                            // 2.6 Create a new row and append 3 columns (title+url, categories, tags)
+                            $("#emailId").append($("<tr class='"+css_option+"' data-id='"+email.uid+"' />")
+                                .append(td_checkbox)
+                                .append(td_star)
+                                .append($('<td/>').text(email.from))
+                                .append($('<td/>').text(email.subject))
+                                .append(td_paper_clip)
+                                .append($('<td/>').text(the_date))
+                            );
+                        });
+                    });
+
+
+            })
+
+        });
+
+	</script>
 @endsection

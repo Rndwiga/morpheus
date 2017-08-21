@@ -31,7 +31,7 @@ $( document ).ready(function() {
 
         window.location = "message-view-alt.html";
     });*/
-    $('#emailId > tbody > tr').on('click', function(e) {
+    $('#emailId  tbody').on('click', "tr", function(e) {
         e.stopPropagation();
         e.preventDefault();
         var id = $(this).attr("data-id");
@@ -49,5 +49,9 @@ $( document ).ready(function() {
 
 
     });
+
+
+
+
 
 });

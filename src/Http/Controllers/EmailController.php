@@ -27,6 +27,14 @@ class EmailController extends Controller
       return $emails;*/
       return view(config('temail.views.pages.mail.index'), compact('emails'));
     }
+    public function indexAjax()
+    {
+      //  return json_encode($this->mailboxConnection->checkMailbox());
+
+      $emails =  $this->mail->getMails();
+
+      return $emails;
+    }
     /**
      * Show the form for creating a new resource.
      *

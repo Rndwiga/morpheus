@@ -55,6 +55,7 @@ class TyondoMailEnhance
            $this->max = $this->limit > 0 ? $this->limit : $this->max;
        }
         $uids = array_splice($uids,0,$this->max);
+       rsort($uids); //reorder appropriately
         $emailsOverview = $this->mailboxConnection->getMailsInfo($uids); //get array of all email ids
         krsort($emailsOverview); //Sort an associative array in descending order, according to the key
         return $emailsOverview;

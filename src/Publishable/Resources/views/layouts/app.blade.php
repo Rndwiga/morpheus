@@ -371,7 +371,7 @@
             </div>
             <ul class="menu accordion-menu">
                 <li><a href="compose-alt.html"><span class="fa fa-pencil menu-icon"></span><p>Compose</p></a></li>
-                <li class="active"><a href="{{route('tyondo.mail.index')}}"><span class="fa fa-inbox menu-icon"></span><p>Inbox</p> <span class="badge badge-success pull-right">4</span></a></li>
+                <li class="active refreshMails"><a href="{{route('tyondo.mail.index')}}"><span class="fa fa-inbox menu-icon"></span><p>Inbox</p> <span class="badge badge-success pull-right">4</span></a></li>
                 <li><a href="#"><span class="fa fa-sign-out menu-icon"></span><p>Sent</p></a></li>
                 <li><a href="#"><span class="fa fa-file-text-o menu-icon"></span><p>Draft</p></a></li>
                 <li><a href="#"><span class="fa fa-exclamation-circle menu-icon"></span><p>Spam</p></a></li>
@@ -481,7 +481,7 @@
 <script src="{{asset('vendor/tyondo/temail/assets/plugins/3d-bold-navigation/js/main.js')}}"></script>
 <script src="{{asset('vendor/tyondo/temail/assets/js/modern.min.js')}}"></script>
 <script src="{{asset('vendor/tyondo/temail/assets/js/pages/inbox-alt.js')}}"></script>
-
+@yield('page-scripts')
 </body>
 
 <!-- Mirrored from steelcoders.com/modern/admin1/inbox-alt.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 22 Nov 2016 07:47:29 GMT -->
