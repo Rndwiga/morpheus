@@ -31,9 +31,17 @@ class EmailController extends Controller
     {
       //  return json_encode($this->mailboxConnection->checkMailbox());
 
-      $emails =  $this->mail->getMails();
+      $data =  [
+          'emails' => $this->mail->getMails(),
+          'mailbox_details' => $this->mail->aboutMailBox()
+          /*
+         * {"date":"Mon, 21 Aug 2017 20:23:03 +0300 (EAT)",
+         * "driver":"imap",
+         * "mailbox":"{gmail-imap.l.google.com:993\/imap\/notls\/ssl\/novalidate-cert\/user=\"raphndwi@gmail.com\"}INBOX","total_emails":30290,"recent_emails":0}
+         * */
+      ];
 
-      return $emails;
+      return $data;
     }
     /**
      * Show the form for creating a new resource.
@@ -100,6 +108,13 @@ class EmailController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function testFn(){
+        $details =  $this->mail->mailboxStatus();
+        print_r($details);
+        exit;
+
+        return $details;
     }
 
 }

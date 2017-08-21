@@ -84,9 +84,44 @@ class TyondoMailEnhance
 
     public function getSingleMail($email_id)
     {
-        $email = $this->mailboxConnection->getMail($email_id, 0);
-        $this->mailboxConnection->markMailAsRead($email_id); //mark email as read
+        //$email = $this->mailboxConnection->getMail($email_id, 0);
+        $email = $this->mailboxConnection->getMail($email_id);
+       // $this->mailboxConnection->markMailAsRead($email_id); //mark email as read
         return $email;
+    }
+
+    /***
+     * Use this function when you want to know about the status of the mailbox. though its pretty useless as it is.
+     * Enhance it to have, disk allocation, disk usage, mailbox status in the same call
+     * @return array
+     */
+
+    public function aboutMailBox(){
+        $details = $this->mailboxConnection->checkMailbox();
+        return [
+            'date' => $details->Date,
+            'driver' => $details->Driver,
+            'mailbox' => $details->Mailbox,
+            'total_emails' => $details->Nmsgs,
+            'recent_emails' => $details->Recent
+        ];
+    }
+
+    public function mailboxStatus(){
+        //return $this->mailboxConnection->statusMailbox(); //stdClass Object ( [flags] => 31 [messages] => 30299 [recent] => 0 [unseen] => 7036 [uidnext] => 63917 [uidvalidity] => 3 )
+       // return $this->mailboxConnection->getListingFolders(); //returns empty arry on gmail
+       // return $this->mailboxConnection->getMailboxInfo(); //runs indefinately
+       // return $this->mailboxConnection->countMails(); //returns total  number of emails
+        //return $this->human_filesize(($this->mailboxConnection->getQuotaLimit())*1024,3); //disk allocation
+        return $this->human_filesize(($this->mailboxConnection->getQuotaUsage())*1024,3); //disk usage
+
+
+    }
+
+   private function human_filesize($bytes, $decimals = 2) {
+        $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+        $factor = floor((strlen($bytes) - 1) / 3);
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
     }
 
 }

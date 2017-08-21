@@ -1,12 +1,10 @@
 
 <!DOCTYPE html>
 <html>
-
-<!-- Mirrored from steelcoders.com/modern/admin1/inbox-alt.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 22 Nov 2016 07:47:26 GMT -->
 <head>
 
     <!-- Title -->
-    <title>Modern | Mailbox - Inbox</title>
+    <title>{{config('temail.app_name')}} | Mailbox</title>
 
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <meta charset="UTF-8">
@@ -136,7 +134,7 @@
                 </a>
             </div>
             <div class="logo-box">
-                <a href="index-2.html" class="logo-text"><span>Modern</span></a>
+                <a href="index-2.html" class="logo-text"><span>{{config('temail.app_name')}}</span></a>
             </div><!-- Logo Box -->
             <div class="search-button">
                 <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
@@ -403,7 +401,7 @@
             </div><!-- Row -->
         </div><!-- Main Wrapper -->
         <div class="page-footer">
-            <p class="no-s">2015 &copy; Modern by Steelcoders.</p>
+            <p class="no-s">{{date('Y')}} &copy; {{config('temail.app_name')}} by Tyondo Enterprise.</p>
         </div>
     </div><!-- Page Inner -->
 </main><!-- Page Content -->
@@ -483,6 +481,4 @@
 <script src="{{asset('vendor/tyondo/temail/assets/js/pages/inbox-alt.js')}}"></script>
 @yield('page-scripts')
 </body>
-
-<!-- Mirrored from steelcoders.com/modern/admin1/inbox-alt.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 22 Nov 2016 07:47:29 GMT -->
 </html>

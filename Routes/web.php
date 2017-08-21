@@ -12,6 +12,8 @@ Auth::routes();
 
 Route::get('/home', $namespacePrefix.'HomeController@index');
 Route::get('/mail/ajax', $namespacePrefix.'EmailController@indexAjax');
+
+Route::get('/mail/test', $namespacePrefix.'EmailController@testFn');
 //Contacts
 
 Route::resource('mail', $namespacePrefix.'EmailController', [

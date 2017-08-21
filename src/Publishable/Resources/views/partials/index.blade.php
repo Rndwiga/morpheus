@@ -10,7 +10,7 @@
 						<span><input type="checkbox" class="check-mail-all"></span>
 					</th>
 					<th class="text-right" colspan="5">
-						<span class="text-muted m-r-sm">Showing 20 of 346 </span>
+						<span class="text-muted m-r-sm emailCounter">Showing 20 of 346 </span>
 						<a class="refreshMails btn btn-default m-r-sm" data-toggle="tooltip" id="refreshMails" data-placement="top" title="Refresh"><i class="fa fa-refresh"></i></a>
 						<div class="btn-group m-r-sm mail-hidden-options">
 							<a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
@@ -112,9 +112,28 @@
 @section('page-scripts')
 	<script>
         $( document ).ready(function() {
+			/*
+			 * This Self-Invoking Anonymous Function is used for refreshing the emails after 30 seconds
+			 * */
+            (function(){
+                setInterval(function(){
+                    refreshEmails() // this will run after every 5 seconds
+                }, 30000);
+            })();
+            /*
+            * Whenever a user clicks the fresh button this is what is triggered
+            * */
+
             $('.refreshMails').on('click', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
+                refreshEmails();
+            });
+            /*
+            * This function is used to fetch emails from the server and refreshes the front-end with the updates
+            * update this function to take inconsideration network failures
+            * */
+			function refreshEmails() {
                 //1.2 fetch the emails
                 $.ajax({
                     type: "GET",
@@ -124,29 +143,29 @@
                     {
                         // 1. remove all existing rows
                         $("tr:has(td)").remove();
-                        var keys = Object.assign([], data).reverse(); //reverse the data to have the latest first
+                        var keys = Object.assign([], data.emails).reverse(); //reverse the data to have the latest first
                         // 2. get each article
                         $.each(keys, function (index, email) {
 
                             // 2.2 Create checkbox
                             var td_checkbox = $("<td class='hidden-xs' />");
-								var span_checkbox = $("<span><input type='checkbox' class='checkbox-mail'></span>");
-								td_checkbox.append(span_checkbox);
-							// 2.2 Create star
+                            var span_checkbox = $("<span><input type='checkbox' class='checkbox-mail'></span>");
+                            td_checkbox.append(span_checkbox);
+                            // 2.2 Create star
                             var td_star = $("<td class='hidden-xs' />");
-								var span_star = $("<i class='fa fa-star icon-state-warning'></i>");
-								td_star.append(span_star);
-							// 2.2 Create paper clip
+                            var span_star = $("<i class='fa fa-star icon-state-warning'></i>");
+                            td_star.append(span_star);
+                            // 2.2 Create paper clip
                             var td_paper_clip = $("<td/>");
-								var span_clip = $("<i class='fa fa-paperclip'></i>");
-                            	td_paper_clip.append(span_clip);
+                            var span_clip = $("<i class='fa fa-paperclip'></i>");
+                            td_paper_clip.append(span_clip);
                             var the_date = new Date(email.date);
                             //identify css options
-							if(email.seen === 0){
+                            if(email.seen === 0){
                                 var css_option = 'unread'
-							}else {
+                            }else {
                                 var css_option = 'read'
-							}
+                            }
 
 
                             // 2.6 Create a new row and append 3 columns (title+url, categories, tags)
@@ -158,11 +177,12 @@
                                 .append(td_paper_clip)
                                 .append($('<td/>').text(the_date))
                             );
+
                         });
+                        //updating the mail count
+                        $('#emailId span.emailCounter').empty().text("Showing 100 of "+data.mailbox_details['total_emails']+""); //remove the content
                     });
-
-
-            })
+            }
 
         });
 
