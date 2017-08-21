@@ -39,10 +39,17 @@ class TyondoMailEnhance
         $this->attachmentDir = storage_path();
         $this->mailboxConnection = new ImapMailbox ($this->hostname, $this->username, $this->password, $this->attachmentDir); //new instance of mailbox
     }
+
+    /***
+     * This function fetches emails within a given limit and returns the latest emails received.
+     * It can be improved to allow fetching of emails from the earliest
+     * @param null $count
+     * @param string $order
+     * @return array
+     */
     public function getMails($count = null, $order = 'new'){
        $uids = $this->mailboxConnection->searchMailbox();
-       rsort($uids);
-       //$uids = $this->mailboxConnection->sortMails();
+       rsort($uids); //get the latest email ids
        if ($count){
            $this->limit = $count;
            $this->max = $this->limit > 0 ? $this->limit : $this->max;
@@ -53,6 +60,12 @@ class TyondoMailEnhance
         return $emailsOverview;
     }
 
+    /***
+     * This functions fetches emails from certain days in the past to today
+     * @param null $days
+     * @return array
+     */
+
     public function getEmailsWithin($days=null){
 
         // Find UIDs of messages within the past week
@@ -62,43 +75,17 @@ class TyondoMailEnhance
         return $emailsOverview;
     }
 
+    /***
+     * This function fetches a single mail from the inbox based on it uid and marks it as read
+     * @param $email_id
+     * @return IncomingMail
+     */
+
     public function getSingleMail($email_id)
     {
-
-        /*
-          *This function fetches a single email from the inbox.
-        */
-
         $email = $this->mailboxConnection->getMail($email_id, 0);
         $this->mailboxConnection->markMailAsRead($email_id); //mark email as read
         return $email;
-    }
-    public function fetchMail()
-    {
-
-        $mailbox = $this->emailDetails(); //inbox connection
-        //return $mailbox->countMails();
-        $emails = $mailbox->searchMailbox('ALL'); //get array of all email ids
-        //  rsort($emails);
-        $emailsOverview = $mailbox->getMailsInfo($emails); //get array of all email ids
-        return $emailsOverview;
-        /*
-        [subject] => Introducing Weebly - Website Builder on ResellerClub!
-        [from] => ResellerClub
-        [to] => raphndwi@gmail.com
-        [date] => Thu, 17 Aug 2017 20:56:12 +0000 (GMT)
-        [message_id] => <542653397.1045881503003372868.JavaMail.obox-web@rcron.myorderbox.aus-tx.colo>
-        [size] => 6610
-        [uid] => 63806
-        [msgno] => 30182
-        [recent] => 0
-        [flagged] => 0
-        [answered] => 0
-        [deleted] => 0
-        [seen] => 0
-        [draft] => 0
-        [udate] => 1503004546
-        */
     }
 
 }

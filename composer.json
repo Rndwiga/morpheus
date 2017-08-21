@@ -1,6 +1,6 @@
 {
-	"name": "tyondo/laravel-mail",
-	"description": "A simple website sms package",
+	"name": "tyondo/laravel-webmail",
+	"description": "A laravel webmail package package",
 	"keywords": ["sms", "tyondo"],
 	"type": "library",
 	"minimum-stability": "dev",
@@ -18,7 +18,6 @@
 		"illuminate/support": "5.3.*|5.4.*",
 		"laravelcollective/html": "5.3.1|5.4.1",
 		"guzzlehttp/guzzle": "^6.2",
-		"infobip/infobip-api-php-client": "dev-master",
 		"maatwebsite/excel": "^2.1"
 	},
 	"require-dev": {
