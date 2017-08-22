@@ -6,36 +6,46 @@ $( document ).ready(function() {
             $('.mail-hidden-options').css('display', 'none');
         };
     };
-    
-    hiddenMailOptions();
-    
-    $('.check-mail-all').click(function () {
-        $('.checkbox-mail').click();
-    });
-    
-    $('.checkbox-mail').each(function() {
-        $(this).click(function() {
-            if($(this).closest('tr').hasClass("checked")){
-                $(this).closest('tr').removeClass('checked');
-                hiddenMailOptions();
-            } else {
-                $(this).closest('tr').addClass('checked');
-                hiddenMailOptions();
-            }
-        });
-    });
-    
-/*    $('.mailbox-content table tr td').not(":first-child").on('click', function(e) {
-        e.stopPropagation();
-        e.preventDefault();
 
-        window.location = "message-view-alt.html";
-    });*/
-    $('#emailId  tbody').on('click', "tr", function(e) {
-        e.stopPropagation();
-        e.preventDefault();
+    hiddenMailOptions();
+
+    //  $('.check-mail-all').click(function () {
+    // $('.checkbox-mail').click();
+
+    $(document).on('click', '.check-mail-all', function(){
+        if($(this).is(':checked')){
+            $('.checkbox-mail').prop('checked', true);
+            $(this).closest('tr').addClass('checked');
+            hiddenMailOptions();
+        } else {
+            $('.checkbox-mail').prop('checked', false);
+            $(this).closest('tr').removeClass('checked');
+            hiddenMailOptions();
+        }
+    });
+
+
+    // });
+
+    /*    $('.checkbox-mail').each(function(e) {
+     //e.stopImmediatePropagation();
+     //e.stopPropagation();
+     $(this).click(function() {
+     if($(this).closest('tr').hasClass("checked")){
+     $(this).closest('tr').removeClass('checked');
+     //e.stopPropagation();
+     hiddenMailOptions();
+     } else {
+     $(this).closest('tr').addClass('checked');
+     // e.stopPropagation();
+     hiddenMailOptions();
+     }
+     });
+     });*/
+
+    $('#emailId tbody').on('click', "tr", function(e) {
         var id = $(this).attr("data-id");
-        //alert(id);
+        // alert(id);
         $.ajax({
             type: "GET",
             url: "mail/"+id
@@ -47,11 +57,6 @@ $( document ).ready(function() {
 
             });
 
-
     });
-
-
-
-
 
 });

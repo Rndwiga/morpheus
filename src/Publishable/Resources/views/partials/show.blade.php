@@ -5,19 +5,21 @@
           <div class="panel-body mailbox-content">
 
               <div class="message-header">
-                  <h3><span>Subject:</span> {{$email->subject}}</h3>
-                  <p class="message-date">{{$email->date}}</p>
+                  <h3><span>Subject:</span> {{$data['email']->subject}}</h3>
+                  <p class="message-date">{{$data['email']->date}}</p>
               </div>
               <div class="message-sender">
                   <img src="{{ asset('assets/images/avatar2.png')}}" alt="">
-                  <p>{{$email->fromName ? $email->fromName : $email->headers->sender['0']->mailbox }} <span>&lt;{{$email->fromAddress}}&gt;</span></p>
+                  <p>{{$data['email']->fromName ? $data['email']->fromName : $data['email']->headers->sender['0']->mailbox }} <span>&lt;{{$data['email']->fromAddress}}&gt;</span></p>
               </div>
               <div class="message-content">
-									@if(isset($email->textHtml))
-											<?php print_r($email->textHtml);?>
-									@else
-											<?php print_r($email->textPlain);?>
-									@endif
+                  <div class="row">
+                      @if(isset($data['email']->textHtml))
+                          <?php print_r($data['email']->textHtml);?>
+                      @else
+                          <?php print_r($data['email']->textPlain);?>
+                      @endif
+                  </div>
               </div>
               <div class="message-attachments">
                   <p><i class="fa fa-paperclip m-r-xs"></i>2 Attachments - <a href="#">View all</a> | <a href="#">Download all</a></p>

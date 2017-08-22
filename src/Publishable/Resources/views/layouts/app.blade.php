@@ -369,7 +369,7 @@
             </div>
             <ul class="menu accordion-menu">
                 <li><a href="compose-alt.html"><span class="fa fa-pencil menu-icon"></span><p>Compose</p></a></li>
-                <li class="active refreshMails"><a href="{{route('tyondo.mail.index')}}"><span class="fa fa-inbox menu-icon"></span><p>Inbox</p> <span class="badge badge-success pull-right">4</span></a></li>
+                <li class="active refreshMails"><a href="{{route('tyondo.mail.index')}}"><span class="fa fa-inbox menu-icon"></span><p>Inbox</p> <span class="badge badge-success pull-right">{{$data['mailbox_details']['unseen_emails']}}</span></a></li>
                 <li><a href="#"><span class="fa fa-sign-out menu-icon"></span><p>Sent</p></a></li>
                 <li><a href="#"><span class="fa fa-file-text-o menu-icon"></span><p>Draft</p></a></li>
                 <li><a href="#"><span class="fa fa-exclamation-circle menu-icon"></span><p>Spam</p></a></li>
@@ -401,7 +401,13 @@
             </div><!-- Row -->
         </div><!-- Main Wrapper -->
         <div class="page-footer">
-            <p class="no-s">{{date('Y')}} &copy; {{config('temail.app_name')}} by Tyondo Enterprise.</p>
+            <div class="row">
+                <div class="col-xs-4"><p class="no-s">Stats: {{$data['mailbox_details']['disk_usage']}} of {{$data['mailbox_details']['disk_allocation']}} used  </p></div>
+                <div class="col-xs-4"><p class="no-s">{{date('Y')}} &copy; {{config('temail.app_name')}} by Tyondo Enterprise.</p></div>
+                <div class="col-xs-4"><p class="no-s">{{date('Y')}} &copy; {{config('temail.app_name')}} by Tyondo Enterprise.</p></div>
+            </div>
+
+
         </div>
     </div><!-- Page Inner -->
 </main><!-- Page Content -->

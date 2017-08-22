@@ -18,19 +18,22 @@ class EmailController extends Controller
     {
       //  return json_encode($this->mailboxConnection->checkMailbox());
 
-      $emails =  $this->mail->getMails();
+      $data =  [
+          'emails' => $this->mail->getMails(),
+          'mailbox_details' => $this->mail->aboutMailBox()
+      ];
 
       /*echo '<pre>';
       print_r($emails);
       echo '</pre>';
       exit;
       return $emails;*/
-      return view(config('temail.views.pages.mail.index'), compact('emails'));
+      return view(config('temail.views.pages.mail.index'), compact('data'));
     }
     public function indexAjax()
     {
       //  return json_encode($this->mailboxConnection->checkMailbox());
-
+    //return null;
       $data =  [
           'emails' => $this->mail->getMails(),
           'mailbox_details' => $this->mail->aboutMailBox()
@@ -40,6 +43,7 @@ class EmailController extends Controller
          * "mailbox":"{gmail-imap.l.google.com:993\/imap\/notls\/ssl\/novalidate-cert\/user=\"raphndwi@gmail.com\"}INBOX","total_emails":30290,"recent_emails":0}
          * */
       ];
+
 
       return $data;
     }
@@ -72,8 +76,11 @@ class EmailController extends Controller
      */
     public function show($email_id)
     {
-      $email = $this->mail->getSingleMail($email_id);
-      return view(config('temail.views.pages.mail.show'), compact('email'));
+      $data = [
+          'email' => $this->mail->getSingleMail($email_id),
+          'mailbox_details' => $this->mail->aboutMailBox()
+      ];
+      return view(config('temail.views.pages.mail.show'), compact('data'));
     }
 
     /**
@@ -111,7 +118,9 @@ class EmailController extends Controller
     }
     public function testFn(){
         $details =  $this->mail->mailboxStatus();
+        echo '<pre>';
         print_r($details);
+        echo '</pre>';
         exit;
 
         return $details;

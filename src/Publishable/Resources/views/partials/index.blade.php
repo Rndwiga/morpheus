@@ -53,8 +53,8 @@
 				</tr>
 				</thead>
 				<tbody >
-				@if(isset($emails))
-					@foreach($emails as $email)
+				@if(isset($data['emails']))
+					@foreach($data['emails'] as $email)
 						<tr    @if($email->seen === 0)
 							   class="unread"
 							   @else
@@ -183,6 +183,8 @@
                         $('#emailId span.emailCounter').empty().text("Showing 100 of "+data.mailbox_details['total_emails']+""); //remove the content
                     });
             }
+
+
 
         });
 
