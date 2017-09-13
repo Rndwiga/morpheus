@@ -1,8 +1,8 @@
 <?php
 
-namespace Tyondo\Sms\Http\Controllers\Auth;
+namespace Tyondo\Email\Http\Controllers\Auth;
 
-use Tyondo\Sms\Http\Controllers\Controller;
+use Tyondo\Email\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller
@@ -21,6 +21,13 @@ class ResetPasswordController extends Controller
     use ResetsPasswords;
 
     /**
+     * Where to redirect users after resetting their password.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/home';
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -28,5 +35,20 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+    /**
+     * Display the password reset view for the given token.
+     *
+     * If no token is present, display the link request form.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string|null  $token
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showResetForm(Request $request, $token = null)
+    {
+        return view(config('tyondo_sms.views.authentication.reset'))->with(
+            ['token' => $token, 'email' => $request->email]
+        );
     }
 }

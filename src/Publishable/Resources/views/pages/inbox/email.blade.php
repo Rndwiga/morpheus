@@ -1,4 +1,7 @@
 @extends(config('temail.views.layouts.master'))
+@section('page_content_header')
+    @include(config('temail.views.pages.partials.search'))
+@endsection
 @section('content')
 <div class="col-md-12">
       <div class="panel panel-white">

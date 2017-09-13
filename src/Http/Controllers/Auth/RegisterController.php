@@ -1,14 +1,11 @@
 <?php
 
-namespace Tyondo\Sms\Http\Controllers\Auth;
+namespace Tyondo\Email\Http\Controllers\Auth;
 
-use Tyondo\Sms\Models\User;
+use Tyondo\Email\Models\User;
+use Tyondo\Email\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use Tyondo\Sms\Helpers\UserActivationLibrary;
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -26,12 +23,11 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
-     * Where to redirect users after login / registration.
+     * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-    private $userActivationLibrary;
+    protected $redirectTo = '/portal/group';
 
     /**
      * Create a new controller instance.
@@ -41,7 +37,15 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->userActivationLibrary = new UserActivationLibrary;
+    }
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view(config('tyondo_sms.views.authentication.register'));
     }
 
     /**
@@ -54,7 +58,6 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
-            'company' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -70,30 +73,8 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
-            'company' => str_slug($data['company']),
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
-    }
-    /**
-     * overides register method in Illuminate\Foundation\Auth\RegistersUsers.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function register(Request $request)
-    {
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        //$this->guard()->login($user);
-
-        //  return $this->registered($request, $user)
-        //    ?: redirect($this->redirectPath());
-
-        //$user = $this->create($request->all());
-        $this->userActivationLibrary->sendActivationMail($user);
-        return redirect('/login')->with('activationStatus', true);
     }
 }

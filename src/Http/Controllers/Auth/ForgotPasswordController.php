@@ -1,8 +1,8 @@
 <?php
 
-namespace Tyondo\Sms\Http\Controllers\Auth;
+namespace Tyondo\Email\Http\Controllers\Auth;
 
-use Tyondo\Sms\Http\Controllers\Controller;
+use Tyondo\Email\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
@@ -28,5 +28,14 @@ class ForgotPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+    /**
+     * Display the form to request a password reset link.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLinkRequestForm()
+    {
+        return view(config('tyondo_sms.views.authentication.forgot'));
     }
 }

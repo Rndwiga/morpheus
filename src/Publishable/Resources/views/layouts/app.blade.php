@@ -368,7 +368,7 @@
                 </div>
             </div>
             <ul class="menu accordion-menu">
-                <li><a href="compose-alt.html"><span class="fa fa-pencil menu-icon"></span><p>Compose</p></a></li>
+                <li><a href="{{route('tyondo.mail.create')}}"><span class="fa fa-pencil menu-icon"></span><p>Compose</p></a></li>
                 <li class="active refreshMails"><a href="{{route('tyondo.mail.index')}}"><span class="fa fa-inbox menu-icon"></span><p>Inbox</p> <span class="badge badge-success pull-right">{{$data['mailbox_details']['unseen_emails']}}</span></a></li>
                 <li><a href="#"><span class="fa fa-sign-out menu-icon"></span><p>Sent</p></a></li>
                 <li><a href="#"><span class="fa fa-file-text-o menu-icon"></span><p>Draft</p></a></li>
@@ -380,23 +380,7 @@
     <div class="page-inner">
         <div id="main-wrapper">
             <div class="row m-t-md">
-                <div class="col-md-12">
-                    <div class="row mailbox-header">
-                        <div class="col-md-8">
-                            <h2>Inbox</h2>
-                        </div>
-                        <div class="col-md-4">
-                            <form action="#" method="GET">
-                                <div class="input-group">
-                                    <input type="text" name="search" class="form-control input-search" placeholder="Search...">
-                                    <span class="input-group-btn">
-                                                <button class="btn btn-success" type="button"><i class="fa fa-search"></i></button>
-                                            </span>
-                                </div><!-- Input Group -->
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                @yield('page_content_header')
                 @yield('content')
             </div><!-- Row -->
         </div><!-- Main Wrapper -->
@@ -483,8 +467,14 @@
 <script src="{{asset('vendor/tyondo/temail/assets/plugins/offcanvasmenueffects/js/main.js')}}"></script>
 <script src="{{asset('vendor/tyondo/temail/assets/plugins/waves/waves.min.js')}}"></script>
 <script src="{{asset('vendor/tyondo/temail/assets/plugins/3d-bold-navigation/js/main.js')}}"></script>
+
+<script src="{{asset('vendor/tyondo/temail/assets/plugins/summernote-master/summernote.min.j')}}s"></script>
+<script src="{{asset('vendor/tyondo/temail/assets/js/pages/compose.js')}}"></script>
+
 <script src="{{asset('vendor/tyondo/temail/assets/js/modern.min.js')}}"></script>
 <script src="{{asset('vendor/tyondo/temail/assets/js/pages/inbox-alt.js')}}"></script>
+
+
 @yield('page-scripts')
 </body>
 </html>

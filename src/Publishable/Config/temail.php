@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'email_host' => 'imap.gmail.com',
+    'email_host' => 'imap.gmail.com', //http://vteams.com/blog/parsing-and-retrieving-emails-from-gmail-inbox-using-php5-imap/
     'email_user' => '',
     'email_password' => '',
 
@@ -31,12 +31,22 @@ return [
     'views' => [
         'layouts' => [
             'master'        => 'TyondoEmail::layouts.app',
+            'auth'        => 'TyondoEmail::layouts.auth',
         ],
         'pages' => [
             'mail' => [
-                'index'     => 'TyondoEmail::partials.index',
-                'create'    => 'TyondoEmail::partials.create',
-                'show'      => 'TyondoEmail::partials.show',
+                'index'     => 'TyondoEmail::pages.inbox.emails-list',
+                'compose'    => 'TyondoEmail::pages.compose.compose',
+                'show'      => 'TyondoEmail::pages.inbox.email',
+            ],
+            'partials' => [
+                'search' => 'TyondoEmail::partials.email-search'
+            ],
+            'authentication' => [
+                'login'     => 'TyondoEmail::auth.login',
+                'reset'     => 'TyondoEmail::auth.passwords.reset',
+                'forgot'     => 'TyondoEmail::auth.passwords.email',
+                'register'     => 'TyondoEmail::auth.register',
             ],
         ],
     ],

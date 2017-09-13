@@ -54,7 +54,11 @@ class EmailController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            //'email' => $this->mail->getSingleMail($email_id),
+            'mailbox_details' => $this->mail->aboutMailBox()
+        ];
+        return view(config('temail.views.pages.mail.compose'), compact('data'));
     }
 
     /**
